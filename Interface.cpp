@@ -11,21 +11,29 @@
 void DisplayMenu()
 {
 	int user_choice = -1;
-	vector<Function*> Functions = {0};
+	vector<Function*> Functions;
 
-	cout << endl << "### Functions ###" << endl;
-	cout << endl << "Select and action:" << endl;
-
-	cout 
-	<< "1) Visualizza la lista delle funzioni" << endl
-	<< "2) Inserisci una funzione" << endl
-	<< "3) Elimina una funzione" << endl
-	<< "4) Elimina tutte le funzioni" << endl
-	<< "5) Seleziona una funzione" << endl
-	<< "0) Esci dal menu'" << endl;
-
-	while (user_choice != 0)
+	cout << endl << 
+	"########################" << endl <<
+	"#						#" << endl <<
+	"#		FUNCTIONS		#" << endl <<
+	"#						#" << endl <<
+	"########################" << endl;
+	
+	do
 	{
+		cout << endl << "Select and action:" << endl;
+
+		cout 
+		<< "1) Visualizza la lista delle funzioni" << endl
+		<< "2) Inserisci una funzione" << endl
+		<< "3) Elimina una funzione" << endl
+		<< "4) Elimina tutte le funzioni" << endl
+		<< "5) Seleziona una funzione" << endl
+		<< "0) Esci dal menu'" << endl;
+
+		cin >> user_choice;
+
 		switch (user_choice)
 		{
 			case 1:
@@ -50,6 +58,7 @@ void DisplayMenu()
 				break;
 		}
 	}
+	while (user_choice != 0);
 	DeleteAllFunctions(Functions);
 	cout << endl << "bye bye" << endl;
 }
@@ -58,9 +67,11 @@ void DisplayMenu()
 ///	@param Functions vecotr of pointers to objects of class Function
 void DisplayFunctions(vector<Function*> Functions)
 {
+	cout << endl << "######################" << endl << endl;
 	if (Functions.empty())
 	{
 		cout << endl << "No function available" << endl;
+		cout << endl << "######################" << endl << endl;
 		return;
 	}
 
@@ -72,6 +83,8 @@ void DisplayFunctions(vector<Function*> Functions)
 		Func->Dump();
 		cout << endl;
 	}
+
+	cout << endl << "######################" << endl << endl;
 	
 }
 
@@ -79,16 +92,19 @@ void DisplayFunctions(vector<Function*> Functions)
 ///	@param Functions vecotr of pointers to objects of class Function
 void InsertFunctions(vector<Function*> Functions)
 {
-	Function* NewFunction;
-	int func_choice;
-	cout << "Select the function:" << endl;
-	cout << "1) Polynomial" << endl << "2) Power" << "3) Exponential" << endl;
+	cout << endl << "######################" << endl << endl;
+
+	int func_choice = 0;
+	cout << "Available functions:" << endl;
+	cout << "1) Polynomial" << endl << "2) Power" << endl << "3) Exponential" << endl;
+	cout << "Choose a function: ";
+	cin >> func_choice;
 	
 	if( func_choice == 1 )
 	{
 		Polynomial* NewPol = new Polynomial;
 
-		if(NewPol = NULL)
+		if(NewPol == NULL)
 		{
 			cout << endl << "Allocation error: Memory not allocated" << endl;
 			exit(-1);
@@ -103,11 +119,16 @@ void InsertFunctions(vector<Function*> Functions)
 			cin >> deg;
 
 			double* coeff = new double[deg + 1];
+			if(coeff == NULL)
+			{
+				cout << endl << "Allocation error: Memory not allocated" << endl;
+				exit(-1);
+			}
 
 			cout << endl << "Insert the coefficients: " << endl;
 			for (int i =  0; i <= deg; i++)
 			{
-				cout << endl << "Coefficient of x^" << deg << ":";
+				cout << endl << "Coefficient of x^" << i << ":";
 				cin >> coeff[i];
 			}
 
@@ -117,23 +138,23 @@ void InsertFunctions(vector<Function*> Functions)
 			{
 				cout << endl << "Is this your function?" << endl;
 				NewPol->Dump();
-				cout 
+				cout << endl
 				<< "1) Yes" << endl
 				<< "2) No" << endl;
 
 				cin >> confirm;
-				if (confirm != 1 || confirm != 2)
+				if (confirm != 1 && confirm != 2)
 				{
 					cout << endl << "Invalid selection" << endl;
 				}
 			} 
-			while (confirm != 1 || confirm != 2);
+			while (confirm != 1 && confirm != 2);
 
 			delete coeff;
 		}
 		while (confirm != 1);
 		
-		NewFunction = NewPol;
+		Functions.push_back(NewPol);
 	}
 
 
@@ -141,7 +162,7 @@ void InsertFunctions(vector<Function*> Functions)
 	{
 		Power* NewPow = new Power;
 
-		if(NewPow = NULL)
+		if(NewPow == NULL)
 		{
 			cout << endl << "Allocation error: Memory not allocated" << endl;
 			exit(-1);
@@ -163,19 +184,19 @@ void InsertFunctions(vector<Function*> Functions)
 			{
 				cout << endl << "Is this your function?" << endl;
 				NewPow->Dump();
-				cout 
+				cout << endl
 				<< "1) Yes" << endl
 				<< "2) No" << endl;
-				if (confirm != 1 || confirm != 2)
+				if (confirm != 1 && confirm != 2)
 				{
 					cout << endl << "Invalid selection" << endl;
 				}
 			} 
-			while (confirm != 1 || confirm != 2);
+			while (confirm != 1 && confirm != 2);
 		}
 		while (confirm != 1);
 
-		NewFunction = NewPow;
+		Functions.push_back(NewPow);
 	}
 
 
@@ -183,7 +204,7 @@ void InsertFunctions(vector<Function*> Functions)
 	{
 		Exponential* NewExp = new Exponential;
 
-		if(NewExp = NULL)
+		if(NewExp == NULL)
 		{
 			cout << endl << "Allocation error: Memory not allocated" << endl;
 			exit(-1);
@@ -208,26 +229,26 @@ void InsertFunctions(vector<Function*> Functions)
 			{
 				cout << endl << "Is this your function?" << endl;
 				NewExp->Dump();
-				cout 
+				cout << endl
 				<< "1) Yes" << endl
 				<< "2) No" << endl;
-				if (confirm != 1 || confirm != 2)
+				if (confirm != 1 && confirm != 2)
 				{
 					cout << endl << "Invalid selection" << endl;
 				}
 			} 
-			while (confirm != 1 || confirm != 2);
+			while (confirm != 1 && confirm != 2);
 		}
 		while (confirm != 1);
 
-		NewFunction = NewExp;
+		Functions.push_back(NewExp);
 	}
 	else
 	{
 		cout << endl << "Invalid selection" << endl;
 	}
 
-	Functions.push_back(NewFunction);
+	cout << endl << "######################" << endl << endl;
 }
 
 /// @brief Allows the user to delete a function in the Functions vector
@@ -259,17 +280,17 @@ void DeleteFunction(vector<Function *> Functions)
 		{
 			cout << endl << "Is this the function you want to delete?" << endl;
 			Functions.at((del_choice - 1))->Dump();
-			cout 
+			cout << endl
 			<< "1) Yes" << endl
 			<< "2) No" << endl;
 
 			cin >> confirm;
-			if (confirm != 1 || confirm != 2)
+			if (confirm != 1 && confirm != 2)
 			{
 				cout << endl << "Invalid selection" << endl;
 			}
 		} 
-		while (confirm != 1 || confirm != 2);
+		while (confirm != 1 && confirm != 2);
 	}
 	while (confirm != 1);
 
@@ -290,7 +311,13 @@ void DeleteAllFunctions(vector<Function *> Functions)
 		return;
 	}
 
-
+	for(Function* Func : Functions)
+	{
+		if(Func != NULL)
+		{
+			delete Func;
+		}
+	}
 
 	Functions.clear();
 	cout << endl << "All Functions were deleted" << endl;
@@ -323,23 +350,23 @@ void SelectFunction(vector<Function *> Functions)
 
 		do
 		{
-			cout << endl << "Is this the function you want to select" << endl;
+			cout << endl << "Is this the function you want to select?" << endl;
 			Functions.at((sel_choice - 1))->Dump();
-			cout 
+			cout << endl
 			<< "1) Yes" << endl
 			<< "2) No" << endl;
 
 			cin >> confirm;
-			if (confirm != 1 || confirm != 2)
+			if (confirm != 1 && confirm != 2)
 			{
 				cout << endl << "Invalid selection" << endl;
 			}
 		} 
-		while (confirm != 1 || confirm != 2);
+		while (confirm != 1 && confirm != 2);
 	}
 	while (confirm != 1);
 
 	cout << endl << "Insert the value of x: " << endl;
 	cin >> in;
-	Functions.at((sel_choice - 1))->GetValue(in);
+	cout << endl << "The result is: " << Functions.at((sel_choice - 1))->GetValue(in) << endl;
 }

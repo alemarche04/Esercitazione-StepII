@@ -187,6 +187,6 @@ void Exponential::WarningMessage(const char *string)
 /// @brief gives the status of the object 
 void Exponential::Dump()
 {
-	cout << endl << "Exponential Function -- DUMP" << endl;
-	cout << k_coeff << "*" << b_coeff << "^" << "(" << c_coeff << "*x)" << endl;
+	//cout << endl << "Exponential Function -- DUMP" << endl;
+	cout << k_coeff << "*" << b_coeff << "^" << "(" << c_coeff << "*x)";
 }

@@ -195,7 +195,7 @@ void Polynomial::WarningMessage(const char *string)
 /// @brief gives the status of the object 
 void Polynomial::Dump() 
 {
-	cout << endl << "Polynomial Function -- DUMP" << endl;
+	//cout << endl << "Polynomial Function -- DUMP" << endl;
 	int i;
 	
 	if (degree == -1) {
@@ -219,5 +219,4 @@ void Polynomial::Dump()
                 }
         }
     }
-	cout << endl;
 }

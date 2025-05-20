@@ -164,6 +164,6 @@ void Power::WarningMessage(const char *string)
 /// @brief gives the status of the object 
 void Power::Dump()
 {
-	cout << endl << "Power Function -- DUMP" << endl;
-	cout << k_coeff << "*x^" << e_coeff << endl;
+	//cout << endl << "Power Function -- DUMP" << endl;
+	cout << k_coeff << "*x^" << e_coeff;
 }
