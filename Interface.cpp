@@ -17,15 +17,15 @@ void DisplayMenu()
 	
 	do
 	{
-		cout << endl << "Select and action:" << endl;
+		cout << endl << "Select an action:" << endl;
 
 		cout 
-		<< "1) Visualizza la lista delle funzioni" << endl
-		<< "2) Inserisci una funzione" << endl
-		<< "3) Elimina una funzione" << endl
-		<< "4) Elimina tutte le funzioni" << endl
-		<< "5) Seleziona una funzione" << endl
-		<< "0) Esci dal menu'" << endl;
+		<< "1) Display all the functions" << endl
+		<< "2) Insert a new function" << endl
+		<< "3) Delete a function" << endl
+		<< "4) Delete all functions" << endl
+		<< "5) Select a function and calculate the value" << endl
+		<< "0) Exit" << endl;
 
 		cin >> user_choice;
 
