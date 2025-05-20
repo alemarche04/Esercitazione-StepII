@@ -13,12 +13,7 @@ void DisplayMenu()
 	int user_choice = -1;
 	vector<Function*> Functions;
 
-	cout << endl << 
-	"########################" << endl <<
-	"#						#" << endl <<
-	"#		FUNCTIONS		#" << endl <<
-	"#						#" << endl <<
-	"########################" << endl;
+	cout << endl << "######## FUNCTIONS MENU ########" << endl << endl;
 	
 	do
 	{
@@ -65,37 +60,32 @@ void DisplayMenu()
 
 /// @brief Displays all the functions inserted by the user
 ///	@param Functions vecotr of pointers to objects of class Function
-void DisplayFunctions(vector<Function*> Functions)
+void DisplayFunctions(vector<Function*>& Functions)
 {
-	cout << endl << "######################" << endl << endl;
 	if (Functions.empty())
 	{
 		cout << endl << "No function available" << endl;
-		cout << endl << "######################" << endl << endl;
 		return;
 	}
 
 	int n = 0;
-	cout << endl << "---FUNCTIONS---" << endl;
+	cout << endl << endl << "---FUNCTIONS---" << endl;
 	for(Function* Func : Functions)
 	{
-		cout << ++n << ")" << endl;
+		cout << ++n << ") ";
 		Func->Dump();
 		cout << endl;
 	}
 
-	cout << endl << "######################" << endl << endl;
-	
+	cout << endl;
 }
 
 /// @brief Allows the user to insert a new function in the Functions vector
 ///	@param Functions vecotr of pointers to objects of class Function
-void InsertFunctions(vector<Function*> Functions)
+void InsertFunctions(vector<Function*>& Functions)
 {
-	cout << endl << "######################" << endl << endl;
-
 	int func_choice = 0;
-	cout << "Available functions:" << endl;
+	cout << endl << "Available functions:" << endl;
 	cout << "1) Polynomial" << endl << "2) Power" << endl << "3) Exponential" << endl;
 	cout << "Choose a function: ";
 	cin >> func_choice;
@@ -104,7 +94,7 @@ void InsertFunctions(vector<Function*> Functions)
 	{
 		Polynomial* NewPol = new Polynomial;
 
-		if(NewPol == NULL)
+		if(!NewPol)
 		{
 			cout << endl << "Allocation error: Memory not allocated" << endl;
 			exit(-1);
@@ -119,7 +109,7 @@ void InsertFunctions(vector<Function*> Functions)
 			cin >> deg;
 
 			double* coeff = new double[deg + 1];
-			if(coeff == NULL)
+			if(!coeff)
 			{
 				cout << endl << "Allocation error: Memory not allocated" << endl;
 				exit(-1);
@@ -150,7 +140,7 @@ void InsertFunctions(vector<Function*> Functions)
 			} 
 			while (confirm != 1 && confirm != 2);
 
-			delete coeff;
+			delete[] coeff;
 		}
 		while (confirm != 1);
 		
@@ -162,7 +152,7 @@ void InsertFunctions(vector<Function*> Functions)
 	{
 		Power* NewPow = new Power;
 
-		if(NewPow == NULL)
+		if(!NewPow)
 		{
 			cout << endl << "Allocation error: Memory not allocated" << endl;
 			exit(-1);
@@ -187,6 +177,7 @@ void InsertFunctions(vector<Function*> Functions)
 				cout << endl
 				<< "1) Yes" << endl
 				<< "2) No" << endl;
+				cin >> confirm;
 				if (confirm != 1 && confirm != 2)
 				{
 					cout << endl << "Invalid selection" << endl;
@@ -204,7 +195,7 @@ void InsertFunctions(vector<Function*> Functions)
 	{
 		Exponential* NewExp = new Exponential;
 
-		if(NewExp == NULL)
+		if(!NewExp)
 		{
 			cout << endl << "Allocation error: Memory not allocated" << endl;
 			exit(-1);
@@ -232,6 +223,7 @@ void InsertFunctions(vector<Function*> Functions)
 				cout << endl
 				<< "1) Yes" << endl
 				<< "2) No" << endl;
+				cin >> confirm;
 				if (confirm != 1 && confirm != 2)
 				{
 					cout << endl << "Invalid selection" << endl;
@@ -248,12 +240,12 @@ void InsertFunctions(vector<Function*> Functions)
 		cout << endl << "Invalid selection" << endl;
 	}
 
-	cout << endl << "######################" << endl << endl;
+	cout << endl;
 }
 
 /// @brief Allows the user to delete a function in the Functions vector
 ///	@param Functions vecotr of pointers to objects of class Function
-void DeleteFunction(vector<Function *> Functions)
+void DeleteFunction(vector<Function*>& Functions)
 {
 	int del_choice = -1;
 	int confirm = 0;
@@ -303,11 +295,11 @@ void DeleteFunction(vector<Function *> Functions)
 
 /// @brief Deletes all the functions in the Functions vector
 ///	@param Functions vecotr of pointers to objects of class Function
-void DeleteAllFunctions(vector<Function *> Functions)
+void DeleteAllFunctions(vector<Function*>& Functions)
 {
 	if (Functions.empty())
 	{
-		cout << endl << "No function available" << endl;
+		cout << endl << "All Functions were deleted" << endl;
 		return;
 	}
 
@@ -325,7 +317,7 @@ void DeleteAllFunctions(vector<Function *> Functions)
 
 /// @brief Allows the user to select a function in the Functions vector and get the value given an input
 ///	@param Functions vecotr of pointers to objects of class Function
-void SelectFunction(vector<Function *> Functions)
+void SelectFunction(vector<Function*>& Functions)
 {
 	int sel_choice = -1;
 	int confirm = 0;
@@ -341,7 +333,7 @@ void SelectFunction(vector<Function *> Functions)
 	{
 		do
 		{
-			cout << endl << "Select the function to be deleted: " << endl;
+			cout << endl << "Select the function to be used: " << endl;
 			DisplayFunctions(Functions);
 			cin >> sel_choice;
 			if(sel_choice < 1 || sel_choice > Functions.size())

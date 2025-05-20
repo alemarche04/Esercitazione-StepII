@@ -16,10 +16,10 @@
 using namespace std;
 
 void DisplayMenu();
-void DisplayFunctions(vector<Function*> Functions);
-void InsertFunctions(vector<Function*> Functions);
-void DeleteFunction(vector<Function*> Functions);
-void DeleteAllFunctions(vector<Function*> Functions);
-void SelectFunction(vector<Function*> Functions);
+void DisplayFunctions(vector<Function*>& Functions);
+void InsertFunctions(vector<Function*>& Functions);
+void DeleteFunction(vector<Function*>& Functions);
+void DeleteAllFunctions(vector<Function*>& Functions);
+void SelectFunction(vector<Function*>& Functions);
 
 #endif

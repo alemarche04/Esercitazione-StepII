@@ -100,7 +100,7 @@ Polynomial Polynomial::operator+(const Polynomial& p)
        
     newP= Polynomial(newCoeff, newSize);
 	
-	delete newCoeff;
+	delete[] newCoeff;
     
     return newP;
 }
