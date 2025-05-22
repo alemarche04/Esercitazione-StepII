@@ -10,11 +10,10 @@
 /// @brief Displays the menu and takes the user input
 void DisplayMenu()
 {
-	size_t user_choice = -1;
+	int user_choice = -1;
 	vector<Function*> Functions;
-
-	cout << endl << "######## FUNCTIONS MENU ########" << endl << endl;
-	
+	clearScreen();
+	cout << endl << "######## FUNCTIONS MENU ########" << endl << endl;	
 	do
 	{
 		PrintActions();
@@ -23,31 +22,41 @@ void DisplayMenu()
 		
 		if (cin.fail() == true)
 		{
+			clearScreen();
 			InputError(user_choice);
+			user_choice = -1;
 		}
 		else
 		{
 			switch (user_choice)
 			{
 				case 1:
+					clearScreen();
 					DisplayFunctions(Functions);
 					break;
 				case 2:
+					clearScreen();
 					InsertFunctions(Functions);
 					break;
 				case 3:
+					clearScreen();
 					DeleteFunction(Functions);
 					break;
 				case 4:
+					clearScreen();
 					DeleteAllFunctions(Functions);
 					break;
 				case 5:
+					clearScreen();
 					SelectFunction(Functions);
 					break;
 				case 0:
+					clearScreen();
 					break;
 				default:
+					clearScreen();
 					ErrorMessage("Invalid selection");
+					user_choice = -1;
 					break;
 			}
 		}
@@ -98,33 +107,50 @@ void DisplayFunctions(vector<Function*>& Functions)
 void InsertFunctions(vector<Function*>& Functions)
 {
 	size_t func_choice = 0;
-	cout << endl << "Available functions:" << endl;
-	cout << "1) Polynomial" << endl << "2) Power" << endl << "3) Exponential" << endl;
-	cout << "Choose a function: ";
-	cin >> func_choice;
 
-	if (cin.fail() == true)
-	{
-		InputError(func_choice);
-	}
-	else if( func_choice == 1 )
-	{
-		InsertPolynomial(Functions);		
-	}
-	else if( func_choice == 2 )
-	{
-		InsertPower(Functions);
-	}
-	else if ( func_choice == 3 )
-	{
-		InsertExponential(Functions);
-	}
-	else
-	{
-		ErrorMessage("Invalid selection");
-	}
+	do{
+		cout << endl << "Available functions:" << endl;
+		cout << 
+		"1) Polynomial" << endl << 
+		"2) Power" << endl << 
+		"3) Exponential" << endl << endl <<
+		"4) Go back to main menu" << endl;
+		cout << "Choose a function: ";
+		cin >> func_choice;
 
+		if (cin.fail() == true)
+		{
+			InputError(func_choice);
+		}
+		else if( func_choice == 1 )
+		{
+			clearScreen();
+			InsertPolynomial(Functions);		
+		}
+		else if( func_choice == 2 )
+		{
+			clearScreen();
+			InsertPower(Functions);
+		}
+		else if ( func_choice == 3 )
+		{
+			clearScreen();
+			InsertExponential(Functions);
+		}
+		else if( func_choice == 4)
+		{
+			clearScreen();
+			return;
+		}
+		else
+		{
+			ErrorMessage("Invalid selection");
+			func_choice = 0;
+		}
+	} 
+	while (func_choice == 0);
 	cout << endl;
+	clearScreen();
 }
 
 /// @brief Handles the creation of a new polynomial function
@@ -140,7 +166,7 @@ void InsertPolynomial(vector<Function*>& Functions)
 	}
 
 	int deg;
-	size_t confirm = -1;
+	int confirm = 0;
 
 	do
 	{
@@ -201,7 +227,7 @@ void InsertPower(vector<Function*>& Functions)
 		exit(-1);
 	}
 
-	size_t confirm = -1;
+	int confirm = 0;
 	double p_e_coeff = 0;
 	double p_k_coeff = 0;
 
@@ -250,7 +276,7 @@ void InsertExponential(vector<Function*>& Functions)
 		exit(-1);
 	}
 
-	size_t confirm = -1;
+	int confirm = 0;
 
 	double p_c_coeff = 0;
 	double p_k_coeff = 0;
@@ -294,7 +320,7 @@ void InsertExponential(vector<Function*>& Functions)
 ///	@param Functions vector of pointers to objects of class Function
 void DeleteFunction(vector<Function*>& Functions)
 {
-	size_t del_choice = -1;
+	size_t del_choice = 0;
 	int confirm = 0;
 
 	if (Functions.empty())
@@ -308,6 +334,11 @@ void DeleteFunction(vector<Function*>& Functions)
 		do
 		{
 			del_choice = Choose(Functions, "Select the function to be deleted:");
+			if (del_choice == (Functions.size() + 1))
+			{
+				clearScreen();
+				return;
+			}
 		} 
 		while (del_choice < 1 || del_choice > Functions.size());
 		
@@ -324,6 +355,7 @@ void DeleteFunction(vector<Function*>& Functions)
 		delete Functions.at(del_choice - 1);
 	}
 	Functions.erase(Functions.begin()+(del_choice - 1));
+	clearScreen();
 }
 
 /// @brief Deletes all the functions in the Functions vector
@@ -367,6 +399,11 @@ void SelectFunction(vector<Function*>& Functions)
 		do
 		{
 			sel_choice = Choose(Functions, "Select the function you want to calculate the value of:");
+			if (sel_choice == (Functions.size() + 1))
+			{
+				clearScreen();
+				return;
+			}
 		} 
 		while (sel_choice < 1 || sel_choice > Functions.size());
 
@@ -380,6 +417,7 @@ void SelectFunction(vector<Function*>& Functions)
 
 	cout << endl << "Insert the value of x: " << endl;
 	cin >> in;
+	clearScreen();
 	cout << endl << "The result is: " << Functions.at((sel_choice - 1))->GetValue(in) << endl;
 }
 
@@ -389,15 +427,17 @@ void SelectFunction(vector<Function*>& Functions)
 ///	@return ID of the selected function
 size_t Choose(vector<Function*>& Functions, const string text)
 {
+	clearScreen();
 	size_t choice;
 	cout << endl << endl << text;
 	DisplayFunctions(Functions);
+	cout << (Functions.size() + 1) << ") Go back to main menu" << endl;
 	cin >> choice;
 	if (cin.fail() == true) 
 	{
 		InputError(choice);
     }
-	else if (choice < 1 || choice > Functions.size())
+	else if (choice < 1 || choice > (Functions.size() + 1))
 	{
 		ErrorMessage("Invalid selection");
 	}
@@ -411,6 +451,7 @@ size_t Choose(vector<Function*>& Functions, const string text)
 ///	@return confirmation number
 size_t Confirm(vector<Function*>& Functions, size_t choice, const string text)
 {
+	clearScreen();
 	int confirm;
 	cout << endl << text << endl;
 	Functions.at((choice - 1))->Dump();
@@ -435,6 +476,7 @@ size_t Confirm(vector<Function*>& Functions, size_t choice, const string text)
 /// @param error message to be printed
 void ErrorMessage(const string error)
 {
+	clearScreen();
 	cout << endl << "ERROR: " << error << endl;
 }
 
@@ -442,8 +484,16 @@ void ErrorMessage(const string error)
 /// @brief handles invalid input from the user
 void InputError(size_t input)
 {
-	cout << "Invalid selection" << endl;
+	clearScreen();
+	ErrorMessage("Invalid selection");
 	cin.clear(); 
 	cin.ignore(256, '\n');
-	input = -1;
+	input = 0;
+}
+
+
+/// @brief clears the screen
+void clearScreen() 
+{
+    cout << "\033[2J\033[1;1H";
 }

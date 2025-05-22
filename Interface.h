@@ -53,4 +53,6 @@ void ErrorMessage(const string error);
 void InputError(size_t input);
 /// @}
 
+void clearScreen();
+
 #endif
