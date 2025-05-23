@@ -160,13 +160,6 @@ double Exponential::GetC()
 ///	@return the value of the function
 double Exponential::GetValue(double in)
 {
-	double e_i = pow((c_coeff * in), -1);
-	if(fmod(e_i, 2) == 0 && k_coeff < 0)
-		{
-			ErrorMessage("GetValue: even root of negative number is not possible");
-			cout << endl << "Returned default value 0" << endl;
-			return 0;
-		}
 	return k_coeff*pow(b_coeff, (c_coeff * in));
 }
 

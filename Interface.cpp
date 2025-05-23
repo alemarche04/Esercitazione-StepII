@@ -85,7 +85,7 @@ void DisplayFunctions(vector<Function*>& Functions)
 {
 	if (Functions.empty())
 	{
-		cout << endl << "No function available" << endl;
+		ErrorMessage("No function available");
 		return;
 	}
 
@@ -416,7 +416,7 @@ void DeleteAllFunctions(vector<Function*>& Functions)
 {
 	if (Functions.empty())
 	{
-		cout << endl << "All Functions were deleted" << endl;
+		cout << endl << "No function to delete" << endl;
 		return;
 	}
 
@@ -468,7 +468,15 @@ void SelectFunction(vector<Function*>& Functions)
 
 	cout << endl << "Insert the value of x: " << endl;
 	cin >> in;
-	cout << endl << "The result is: " << Functions.at((sel_choice - 1))->GetValue(in) << endl;
+	if(cin.fail() == true)
+	{
+		InputError(in);
+		return;
+	}
+	else
+	{
+		cout << endl << "The result is: " << Functions.at((sel_choice - 1))->GetValue(in) << endl;
+	}
 }
 
 /// @brief asks the user wich one of the available functions they want to select
