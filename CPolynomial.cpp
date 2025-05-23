@@ -130,7 +130,8 @@ void Polynomial::SetPolynomial(const double* coefficients, int size)
 	
 	if (size < 1) {
 		ErrorMessage("SetPolynomial: the degree of the Polynomial cannot be negative");
-		exit(-1);
+		Reset();
+		cout << endl << "Function set to default: Uninitialized polynomial" << endl;
 	}
 	
 	if (coeff != NULL)

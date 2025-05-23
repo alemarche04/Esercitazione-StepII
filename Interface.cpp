@@ -12,7 +12,6 @@ void DisplayMenu()
 {
 	int user_choice = -1;
 	vector<Function*> Functions;
-	clearScreen();
 	cout << endl << "######## FUNCTIONS MENU ########" << endl << endl;	
 	do
 	{
@@ -22,7 +21,7 @@ void DisplayMenu()
 		
 		if (cin.fail() == true)
 		{
-			clearScreen();
+	
 			InputError(user_choice);
 			user_choice = -1;
 		}
@@ -31,30 +30,30 @@ void DisplayMenu()
 			switch (user_choice)
 			{
 				case 1:
-					clearScreen();
+			
 					DisplayFunctions(Functions);
 					break;
 				case 2:
-					clearScreen();
+			
 					InsertFunctions(Functions);
 					break;
 				case 3:
-					clearScreen();
+			
 					DeleteFunction(Functions);
 					break;
 				case 4:
-					clearScreen();
+			
 					DeleteAllFunctions(Functions);
 					break;
 				case 5:
-					clearScreen();
+			
 					SelectFunction(Functions);
 					break;
 				case 0:
-					clearScreen();
+			
 					break;
 				default:
-					clearScreen();
+			
 					ErrorMessage("Invalid selection");
 					user_choice = -1;
 					break;
@@ -115,7 +114,7 @@ void InsertFunctions(vector<Function*>& Functions)
 		"2) Power" << endl << 
 		"3) Exponential" << endl << endl <<
 		"4) Go back to main menu" << endl;
-		cout << "Choose a function: ";
+		cout << endl << "Choose a function: ";
 		cin >> func_choice;
 
 		if (cin.fail() == true)
@@ -124,22 +123,22 @@ void InsertFunctions(vector<Function*>& Functions)
 		}
 		else if( func_choice == 1 )
 		{
-			clearScreen();
+	
 			InsertPolynomial(Functions);		
 		}
 		else if( func_choice == 2 )
 		{
-			clearScreen();
+	
 			InsertPower(Functions);
 		}
 		else if ( func_choice == 3 )
 		{
-			clearScreen();
+	
 			InsertExponential(Functions);
 		}
 		else if( func_choice == 4)
 		{
-			clearScreen();
+	
 			return;
 		}
 		else
@@ -150,7 +149,6 @@ void InsertFunctions(vector<Function*>& Functions)
 	} 
 	while (func_choice == 0);
 	cout << endl;
-	clearScreen();
 }
 
 /// @brief Handles the creation of a new polynomial function
@@ -172,6 +170,14 @@ void InsertPolynomial(vector<Function*>& Functions)
 	{
 		cout << endl << "Insert the degree: ";
 		cin >> deg;
+		if (cin.fail() == true)
+		{
+			ErrorMessage("Invalid selection");
+			cin.clear(); 
+			cin.ignore(256, '\n');
+			delete NewPol;
+			return;
+		}
 
 		double* coeff = new double[deg + 1];
 		if(!coeff)
@@ -184,6 +190,14 @@ void InsertPolynomial(vector<Function*>& Functions)
 		{
 			cout << endl << "Coefficient of x^" << i << ":";
 			cin >> coeff[i];
+			if (cin.fail() == true)
+			{
+				ErrorMessage("Invalid selection");
+				cin.clear(); 
+				cin.ignore(256, '\n');
+				delete NewPol;
+				return;
+			}
 		}
 
 		NewPol->SetPolynomial(coeff, (deg + 1));
@@ -235,8 +249,24 @@ void InsertPower(vector<Function*>& Functions)
 	{
 		cout << endl << "Insert the exponent: ";
 		cin >> p_e_coeff;
+		if (cin.fail() == true)
+		{
+			ErrorMessage("Invalid selection");
+			cin.clear(); 
+			cin.ignore(256, '\n');
+			delete NewPow;
+			return;
+		}
 		cout << endl << "Insert the coefficient: ";
 		cin >> p_k_coeff;
+		if (cin.fail() == true)
+		{
+			ErrorMessage("Invalid selection");
+			cin.clear(); 
+			cin.ignore(256, '\n');
+			delete NewPow;
+			return;
+		}
 		NewPow->SetPower(p_k_coeff, p_e_coeff);
 
 		do
@@ -278,19 +308,43 @@ void InsertExponential(vector<Function*>& Functions)
 
 	int confirm = 0;
 
-	double p_c_coeff = 0;
-	double p_k_coeff = 0;
-	double p_b_coeff = 0;
+	double e_c_coeff = 0;
+	double e_k_coeff = 0;
+	double e_b_coeff = 0;
 
 	do
 	{
 		cout << endl << "Insert the exponent coefficient: ";
-		cin >> p_c_coeff;
-		cout << endl << "Insert the base: ";
-		cin >> p_b_coeff;
+		cin >> e_c_coeff;
+		if (cin.fail() == true)
+		{
+			ErrorMessage("Invalid selection");
+			cin.clear(); 
+			cin.ignore(256, '\n');
+			delete NewExp;
+			return;
+		}
+		cout << endl << "Insert the base (cannot be negative or 0): ";
+		cin >> e_b_coeff;
+		if (cin.fail() == true)
+		{
+			ErrorMessage("Invalid selection");
+			cin.clear(); 
+			cin.ignore(256, '\n');
+			delete NewExp;
+			return;
+		}
 		cout << endl << "Insert the base coefficient: ";
-		cin >> p_k_coeff;
-		NewExp->SetExponential(p_b_coeff, p_k_coeff, p_c_coeff);
+		cin >> e_k_coeff;
+		if (cin.fail() == true)
+		{
+			ErrorMessage("Invalid selection");
+			cin.clear(); 
+			cin.ignore(256, '\n');
+			delete NewExp;
+			return;
+		}
+		NewExp->SetExponential(e_b_coeff, e_k_coeff, e_c_coeff);
 		do
 		{
 			cout << endl << "Is this your function?" << endl;
@@ -336,7 +390,6 @@ void DeleteFunction(vector<Function*>& Functions)
 			del_choice = Choose(Functions, "Select the function to be deleted:");
 			if (del_choice == (Functions.size() + 1))
 			{
-				clearScreen();
 				return;
 			}
 		} 
@@ -355,7 +408,6 @@ void DeleteFunction(vector<Function*>& Functions)
 		delete Functions.at(del_choice - 1);
 	}
 	Functions.erase(Functions.begin()+(del_choice - 1));
-	clearScreen();
 }
 
 /// @brief Deletes all the functions in the Functions vector
@@ -401,7 +453,6 @@ void SelectFunction(vector<Function*>& Functions)
 			sel_choice = Choose(Functions, "Select the function you want to calculate the value of:");
 			if (sel_choice == (Functions.size() + 1))
 			{
-				clearScreen();
 				return;
 			}
 		} 
@@ -417,7 +468,6 @@ void SelectFunction(vector<Function*>& Functions)
 
 	cout << endl << "Insert the value of x: " << endl;
 	cin >> in;
-	clearScreen();
 	cout << endl << "The result is: " << Functions.at((sel_choice - 1))->GetValue(in) << endl;
 }
 
@@ -427,7 +477,6 @@ void SelectFunction(vector<Function*>& Functions)
 ///	@return ID of the selected function
 size_t Choose(vector<Function*>& Functions, const string text)
 {
-	clearScreen();
 	size_t choice;
 	cout << endl << endl << text;
 	DisplayFunctions(Functions);
@@ -451,7 +500,6 @@ size_t Choose(vector<Function*>& Functions, const string text)
 ///	@return confirmation number
 size_t Confirm(vector<Function*>& Functions, size_t choice, const string text)
 {
-	clearScreen();
 	int confirm;
 	cout << endl << text << endl;
 	Functions.at((choice - 1))->Dump();
@@ -476,24 +524,15 @@ size_t Confirm(vector<Function*>& Functions, size_t choice, const string text)
 /// @param error message to be printed
 void ErrorMessage(const string error)
 {
-	clearScreen();
-	cout << endl << "ERROR: " << error << endl;
+	cout << endl << endl << "ERROR: " << error << endl << endl;
 }
 
 
-/// @brief handles invalid input from the user
+/// @brief handles invalid input from the user in the selection menu
 void InputError(size_t input)
 {
-	clearScreen();
 	ErrorMessage("Invalid selection");
 	cin.clear(); 
 	cin.ignore(256, '\n');
 	input = 0;
-}
-
-
-/// @brief clears the screen
-void clearScreen() 
-{
-    cout << "\033[2J\033[1;1H";
 }

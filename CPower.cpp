@@ -139,7 +139,8 @@ double Power::GetValue(double in)
 	if(fmod(e_i, 2) == 0 && (k_coeff*in) < 0)
 		{
 			ErrorMessage("GetValue: even root of negative number is not possible");
-			exit(-1);
+			cout << endl << "Returned default value 0" << endl;
+			return 0;
 		}
 	return (k_coeff*(pow(in, e_coeff)));
 }

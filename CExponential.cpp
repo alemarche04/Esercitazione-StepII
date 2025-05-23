@@ -100,7 +100,9 @@ void Exponential::SetExponential(double b, double k, double c)
 	if(b <= 0)
 	{
 		ErrorMessage("SetExponential: base cannot be negative or 0");
-		exit(-1);
+		Init();
+		cout << endl << "Function set to default: 1*1^(x*0)" << endl;
+		return;
 	}
 	b_coeff = b;
 	k_coeff = k;
@@ -162,7 +164,8 @@ double Exponential::GetValue(double in)
 	if(fmod(e_i, 2) == 0 && k_coeff < 0)
 		{
 			ErrorMessage("GetValue: even root of negative number is not possible");
-			exit(-1);
+			cout << endl << "Returned default value 0" << endl;
+			return 0;
 		}
 	return k_coeff*pow(b_coeff, (c_coeff * in));
 }
